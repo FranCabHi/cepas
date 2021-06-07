@@ -17,6 +17,15 @@
   </div>
 
   <div class="field">
+    <%= form.label :oenologists %>
+    <%= form.collection_check_boxes(:oenologist_ids, Oenologist.all.order(:age), :id, :oeno_name) do |oe| %>
+            <%= oe.label class: "label-checkbox" do %>
+              <%= oe.check_box + oe.text %>
+            <% end %>
+    <% end %>
+  </div>
+
+  <div class="field">
     <%= form.label :strains %>
     <%= form.collection_check_boxes(:strain_ids, Strain.where(available:true), :id, :strain_name) do |strain| %>
             <%= strain.label class: "label-checkbox" do %>

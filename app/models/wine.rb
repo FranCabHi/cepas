@@ -1,6 +1,8 @@
 class Wine < ApplicationRecord
     has_many :wine_strains, dependent: :destroy
-    has_many :strains, through: :wine_strains  
+    has_many :strains, through: :wine_strains
+    has_many :wine_oenologists, dependent: :destroy
+    has_many :oenologists, through: :wine_oenologists
 
     def addStrainPercentage(strain_percentage)
         strain_percentage.each do |strain_id, strain_percentage|
@@ -12,6 +14,12 @@ class Wine < ApplicationRecord
         end
     end
 
+    def oenologist_name
+        oenologists.map do |wine_oenologist|
+            wine_oenologist.oeno_name
+        end.join(', ')
+    end 
+
     def strainnames_and_percentages
         strain_list = []
         wine_strains.map do |ws|
@@ -22,5 +30,7 @@ class Wine < ApplicationRecord
             "#{strain_info[0]} (#{strain_info[1]}%)"
         end.join (', ')
     end
+
+
 
 end
